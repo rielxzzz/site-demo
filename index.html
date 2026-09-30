@@ -1,46 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificação de pagamento — Demo</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificação de Pagamento — Demo</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="card">
-    <div class="brand">PAYMENT<span>DEMO</span></div>
-    <h1>Verificar método de pagamento</h1>
-    <p class="subtitle">
-      Demonstração local. Nenhum dado digitado é enviado ou armazenado.
-    </p>
+  <div class="page">
+    <header class="topbar">
+      <div class="logo"><span>PAY</span> DEMO</div>
+      <div class="secure">● Ambiente de demonstração</div>
+    </header>
 
-    <form id="paymentForm" autocomplete="off">
-      <label for="cardNumber">Número do cartão</label>
-      <input id="cardNumber" inputmode="numeric" maxlength="19"
-             placeholder="4242 4242 4242 4242">
+    <main class="shell">
+      <section class="intro">
+        <div class="eyebrow">VERIFICAÇÃO</div>
+        <h1>Verifique seu método de pagamento</h1>
+        <p>Insira um código de teste autorizado para simular uma aprovação.</p>
+      </section>
 
-      <div class="row">
-        <div>
-          <label for="expiry">Validade</label>
-          <input id="expiry" inputmode="numeric" maxlength="5" placeholder="MM/AA">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Dados de teste</h2>
+            <p>Esta página não envia nem armazena informações.</p>
+          </div>
+          <div class="shield">✓</div>
         </div>
-        <div>
-          <label for="cvv">CVV</label>
-          <input id="cvv" inputmode="numeric" maxlength="4" placeholder="•••">
+
+        <form id="paymentForm" autocomplete="off">
+          <label for="code">Código do cartão de teste</label>
+          <input id="code" maxlength="12" placeholder="DEMO-0001"
+                 spellcheck="false" autocapitalize="characters">
+
+          <div class="fake-row">
+            <div>
+              <label>Validade</label>
+              <input id="expiry" maxlength="5" placeholder="MM/AA" inputmode="numeric">
+            </div>
+            <div>
+              <label>CVV</label>
+              <input id="cvv" maxlength="4" placeholder="•••" inputmode="numeric">
+            </div>
+          </div>
+
+          <button type="submit">Verificar código</button>
+        </form>
+
+        <div id="result" class="result hidden" aria-live="polite"></div>
+
+        <div class="demo-note">
+          <strong>Modo demonstração</strong>
+          <span>Somente os códigos DEMO-0001 a DEMO-0100 são aceitos.</span>
         </div>
-      </div>
+      </section>
 
-      <button type="submit">Verificar cartão</button>
-    </form>
-
-    <div id="result" class="result hidden"></div>
-
-    <p class="notice">
-      Esta é uma simulação. Para pagamentos reais, use um gateway como Stripe
-      ou Mercado Pago e campos hospedados/tokenizados pelo provedor.
-    </p>
-  </main>
-
-  <script src="script.js"></script>
+      <footer>PAY DEMO · Projeto de teste local · Nenhum dado é transmitido</footer>
+    </main>
+  </div>
+<script src="script.js"></script>
 </body>
 </html>

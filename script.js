@@ -1,58 +1,44 @@
 const form = document.getElementById("paymentForm");
-const cardNumber = document.getElementById("cardNumber");
+const code = document.getElementById("code");
 const expiry = document.getElementById("expiry");
 const cvv = document.getElementById("cvv");
 const result = document.getElementById("result");
 
-// Apenas cartões fictícios de demonstração.
-// Não existe consulta a cartões reais e nenhum dado é enviado.
-const TEST_CARDS = {
-  "4242424242424242": "approved",
-  "4000000000000002": "declined"
-};
+const APPROVED_CODES = new Set(
+  Array.from({ length: 100 }, (_, i) => `DEMO-${String(i + 1).padStart(4, "0")}`)
+);
 
-cardNumber.addEventListener("input", () => {
-  let value = cardNumber.value.replace(/\D/g, "").slice(0, 16);
-  cardNumber.value = value.replace(/(.{4})/g, "$1 ").trim();
+code.addEventListener("input", () => {
+  code.value = code.value.toUpperCase().replace(/[^A-Z0-9-]/g, "").slice(0, 9);
 });
 
 expiry.addEventListener("input", () => {
-  let value = expiry.value.replace(/\D/g, "").slice(0, 4);
-  if (value.length > 2) value = value.slice(0, 2) + "/" + value.slice(2);
-  expiry.value = value;
+  let v = expiry.value.replace(/\D/g, "").slice(0, 4);
+  if (v.length > 2) v = v.slice(0, 2) + "/" + v.slice(2);
+  expiry.value = v;
 });
 
 cvv.addEventListener("input", () => {
   cvv.value = cvv.value.replace(/\D/g, "").slice(0, 4);
 });
 
-function showResult(type, message) {
-  result.className = `result ${type}`;
-  result.textContent = message;
-}
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+  const value = code.value.trim();
 
-  const number = cardNumber.value.replace(/\D/g, "");
-  const validTestCard = TEST_CARDS[number];
-
-  if (number.length !== 16 || !validTestCard) {
-    showResult(
-      "error",
-      "Use um cartão de teste da demonstração. Nenhum cartão real é consultado."
-    );
+  if (!APPROVED_CODES.has(value)) {
+    result.className = "result error";
+    result.textContent = "✕ Código não autorizado para esta demonstração.";
     return;
   }
 
   if (!/^\d{2}\/\d{2}$/.test(expiry.value) || cvv.value.length < 3) {
-    showResult("error", "Preencha validade e CVV usando dados fictícios.");
+    result.className = "result error";
+    result.textContent = "Preencha os campos de teste de validade e CVV.";
     return;
   }
 
-  if (validTestCard === "approved") {
-    showResult("success", "✓ Cartão de TESTE aprovado para a demonstração.");
-  } else {
-    showResult("error", "✕ Cartão de TESTE recusado para a demonstração.");
-  }
+  result.className = "result success";
+  result.textContent = "✓ Código de teste aprovado com sucesso.";
 });
