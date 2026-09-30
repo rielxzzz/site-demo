@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificação de pagamento — Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <div class="brand">PAYMENT<span>DEMO</span></div>
+    <h1>Verificar método de pagamento</h1>
+    <p class="subtitle">
+      Demonstração local. Nenhum dado digitado é enviado ou armazenado.
+    </p>
+
+    <form id="paymentForm" autocomplete="off">
+      <label for="cardNumber">Número do cartão</label>
+      <input id="cardNumber" inputmode="numeric" maxlength="19"
+             placeholder="4242 4242 4242 4242">
+
+      <div class="row">
+        <div>
+          <label for="expiry">Validade</label>
+          <input id="expiry" inputmode="numeric" maxlength="5" placeholder="MM/AA">
+        </div>
+        <div>
+          <label for="cvv">CVV</label>
+          <input id="cvv" inputmode="numeric" maxlength="4" placeholder="•••">
+        </div>
+      </div>
+
+      <button type="submit">Verificar cartão</button>
+    </form>
+
+    <div id="result" class="result hidden"></div>
+
+    <p class="notice">
+      Esta é uma simulação. Para pagamentos reais, use um gateway como Stripe
+      ou Mercado Pago e campos hospedados/tokenizados pelo provedor.
+    </p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
